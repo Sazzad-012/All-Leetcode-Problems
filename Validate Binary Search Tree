@@ -1,0 +1,27 @@
+class Solution {
+public:
+    vector<int> vc;
+
+    bool isValidBST(TreeNode* root) {
+        inorder(root);
+        bool is_bst = true;
+
+        for(int i = 0 ; i < vc.size() - 1 ; i++) {
+            if(vc[i] >= vc[i+1]) {
+                is_bst = false;
+                break;
+            }
+        }
+        
+        return is_bst;
+    }
+
+private:
+    void inorder(TreeNode* root) {
+        if(!root) return;
+
+        inorder(root->left);
+        vc.push_back(root->val);
+        inorder(root->right);
+    }
+};
