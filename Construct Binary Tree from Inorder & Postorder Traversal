@@ -1,0 +1,28 @@
+class Solution {
+public:
+    TreeNode* buildTree(vector<int>& in, vector<int>& post) {
+        int index = post.size() - 1;
+        return build(in, post, index, 0, in.size() - 1);
+    }
+
+    TreeNode * build(vector<int> &in, vector<int> &post, int &index, int i, int j) {
+        if(i > j) return NULL;
+
+        TreeNode * root = new TreeNode(post[index]);
+        
+        int split = 0;
+        
+        for(int i = 0 ; i < in.size() ; i++){
+            if(in[i] == post[index]) {
+                split = i;
+                break;
+            }
+        }
+
+        index--;
+        root -> right = build(in, post, index, split + 1, j);
+        root -> left = build(in, post, index, i, split - 1);
+        
+        return root;
+    }
+};
