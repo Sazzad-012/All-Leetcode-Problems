@@ -1,0 +1,15 @@
+class Solution {
+public:
+vector<int> list;
+    vector<int> preorderTraversal(TreeNode* root) {
+        if(root == NULL)
+        {
+            return {};
+        }
+        list.push_back(root->val);
+        preorderTraversal(root->left);
+        preorderTraversal(root->right);
+
+        return list;
+    }
+};
