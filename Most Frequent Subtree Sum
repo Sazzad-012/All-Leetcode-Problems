@@ -1,0 +1,32 @@
+
+class Solution {
+public:
+    map<int, int> mp;
+
+    int dfs(TreeNode * root) {
+        if(!root) return 0;
+
+        int left = dfs(root -> left);
+        int right = dfs(root -> right);
+
+        int sum = root -> val + left + right;
+        mp[sum]++;
+        
+        return sum;
+    }
+    vector<int> findFrequentTreeSum(TreeNode* root) {
+        vector<int> vc;
+        dfs(root);
+        int max_f = INT_MIN;
+
+        for(auto x : mp) {
+            max_f = max(max_f, x.second);
+        }
+
+        for(auto x : mp) {
+            if(x.second == max_f) vc.push_back(x.first);
+        }
+
+        return vc;
+    }
+};
