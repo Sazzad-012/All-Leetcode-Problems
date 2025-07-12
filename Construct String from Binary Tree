@@ -1,0 +1,30 @@
+class Solution {
+public:
+    string tree2str(TreeNode* root) {
+        string s;
+        preorder(root,s);
+        return s;
+    }
+private:
+    void preorder(TreeNode* root, string &s) {
+        if(!root) return;
+
+        s += to_string(root->val);
+        
+        if(root->left) {
+            s += '(';
+            preorder(root->left,s);
+            s += ')';
+        }
+
+        if(root->right) {
+            if(!root->left) {
+                s += "()";
+            }
+
+            s += '(';
+            preorder(root->right,s);
+            s += ')';
+        }
+    }
+};
