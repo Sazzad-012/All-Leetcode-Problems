@@ -1,0 +1,41 @@
+class Solution {
+public:
+    TreeNode* lca(TreeNode* root, TreeNode* a, TreeNode* b) {
+        if (!root || root == a || root == b) return root;
+        
+        TreeNode* left = lca(root->left, a, b);
+        TreeNode* right = lca(root->right, a, b);
+        
+        if (left && right) return root;
+        return left ? left : right;
+    }
+    
+    TreeNode* subtreeWithAllDeepest(TreeNode* root) {
+        if (!root) return NULL;
+        
+        queue<TreeNode*> q;
+        q.push(root);
+        vector<TreeNode*> deepestLeaves;
+        
+        while (!q.empty()) {
+            int levelSize = q.size();
+            deepestLeaves.clear();
+            
+            while(levelSize--) {
+                TreeNode* node = q.front();
+                q.pop();
+                deepestLeaves.push_back(node);
+                
+                if (node->left) q.push(node->left);
+                if (node->right) q.push(node->right);
+            }
+        }
+        
+        TreeNode* commonAncestor = deepestLeaves[0];
+        for (int i = 1; i < deepestLeaves.size(); ++i) {
+            commonAncestor = lca(root, commonAncestor, deepestLeaves[i]);
+        }
+        
+        return commonAncestor;
+    }
+};
