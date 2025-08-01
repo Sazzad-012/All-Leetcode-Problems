@@ -1,0 +1,22 @@
+class Solution {
+public:
+    int ans = 0;
+
+    int longestUnivaluePath(TreeNode* root) {
+        dfs(root, INT_MIN);
+        return ans;    
+    }
+
+    int dfs(TreeNode * root, int parent_val) {
+        if(!root) return 0;
+
+        int left = dfs(root -> left, root -> val);
+        int right = dfs(root -> right, root -> val);
+
+        ans = max(ans, left + right);
+
+        if(parent_val == root -> val) return 1 + max(left, right);
+
+        return 0;
+    }
+};
