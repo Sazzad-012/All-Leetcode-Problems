@@ -1,0 +1,25 @@
+class Solution {
+public:
+    string serializeSubtrees(TreeNode* node, map<string, int>& mp, vector<TreeNode*>& ans) {
+        if (!node) return "#";
+        
+        string left = serializeSubtrees(node->left, mp, ans);
+        string right = serializeSubtrees(node->right, mp, ans);
+        
+        string s = left + "," + right + "," + to_string(node->val);
+        
+        if (mp[s] == 1) ans.push_back(node);
+
+        mp[s]++;
+        return s;
+    }
+ vector<TreeNode*> findDuplicateSubtrees(TreeNode* root) {
+        map<string, int> mp;
+        vector<TreeNode*> ans;
+        
+        serializeSubtrees(root, mp, ans);
+        
+        return ans;
+    }
+    
+};
