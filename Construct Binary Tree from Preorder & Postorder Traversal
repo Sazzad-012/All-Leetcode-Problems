@@ -1,0 +1,31 @@
+class Solution {
+public:
+    TreeNode* constructFromPrePost(vector<int>& pre, vector<int>& post) {
+        int index = 0;
+        return build(pre, post, index, 0, post.size() - 1);
+    }
+
+    TreeNode* build(vector<int>& pre, vector<int>& post, int& index, int l, int h) {
+        if (index >= pre.size() || l > h)
+            return NULL;
+
+        TreeNode* root = new TreeNode(pre[index]);
+        index++;
+
+        if (l == h)
+            return root;
+
+        int split = l;
+        for (int i = l; i <= h; i++) {
+            if (post[i] == pre[index]) {
+                split = i;
+                break;
+            }
+        }
+
+        root->left = build(pre, post, index, l, split);
+        root->right = build(pre, post, index, split + 1, h - 1);
+
+        return root;
+    }
+};
