@@ -1,0 +1,27 @@
+class Solution {
+public:
+    vector<TreeNode*> result;
+    set<int> st;
+
+    vector<TreeNode*> delNodes(TreeNode* root, vector<int>& vc) {
+        for (int i : vc) {
+            st.insert(i);
+        }
+            
+        dfs(root, result, st, true);
+        return result;
+    }
+
+    TreeNode* dfs(TreeNode* root, vector<TreeNode*>& result, set<int>& st, bool is_root) {
+        if (!root) return NULL;
+
+        bool deleted = st.count(root->val);
+        
+        if (is_root && !deleted) result.push_back(root);
+
+        root->left = dfs(root->left, result, st, deleted);
+        root->right =  dfs(root->right, result, st, deleted);
+        
+        return deleted ? NULL : root;
+    }
+};
