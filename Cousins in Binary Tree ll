@@ -1,0 +1,34 @@
+class Solution {
+public:
+    void dfs(TreeNode* root, int depth, vector<int>&mp){
+        if(!root) return;
+
+        mp[depth] += root -> val;
+
+        dfs(root -> left, depth + 1, mp);
+        dfs(root -> right, depth + 1, mp);
+    }
+
+    void solve(TreeNode* root, int sib, int depth, vector<int>&mp){
+        if(!root) return;
+
+        int leftsibling = 0, rightsibling = 0;
+
+        if(root -> left) leftsibling = root -> left -> val;
+        if(root -> right) rightsibling = root -> right -> val;
+
+        root -> val = mp[depth] - root -> val - sib;
+
+        solve(root -> right, leftsibling, depth + 1, mp);
+        solve(root -> left, rightsibling, depth + 1, mp);
+  
+    }
+    TreeNode* replaceValueInTree(TreeNode* root) {
+        vector<int> mp(100005, 0);
+
+        dfs(root, 0, mp);
+        solve(root, 0, 0, mp);
+
+        return root;
+    }
+};
