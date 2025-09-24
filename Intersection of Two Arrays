@@ -1,0 +1,15 @@
+class Solution {
+public:
+    vector<int> intersection(vector<int>& a, vector<int>& b) {
+     vector<int> ans;
+        set<int> first(a.begin(), a.end()), second(b.begin(), b.end());
+
+        for(int x : first) {
+            if(second.count(x)) {
+                ans.push_back(x);
+            }
+        }
+
+        return ans;
+    }   
+};
