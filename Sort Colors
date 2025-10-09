@@ -1,0 +1,29 @@
+class Solution {
+public:
+    void sortColors(vector<int>& a) {
+        int zero = 0, one = 0, two = 0;
+
+        for(int i = 0 ; i < a.size() ; i++) {
+            if(a[i] == 0) zero++;
+            if(a[i] == 1) one++;
+            if(a[i] == 2) two++;
+        }
+        
+        int indx = 0;
+
+        for(int i = 0 ; i < zero ; i++) {
+            a[indx] = 0;
+            indx++;
+        }
+
+        for(int i = 0 ; i < one ; i++) {
+            a[indx] = 1;
+            indx++;
+        }
+
+        for(int i = 0 ; i < two ; i++) {
+            a[indx] = 2;
+            indx++;
+        }
+    }
+};
